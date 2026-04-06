@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kingdom Voices — System Drafting v1.0</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Space+Grotesk:wght@300;400;700&amp;family=Caveat:wght@400;700&amp;family=Nanum+Pen+Script&amp;family=Reenie+Beanie&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#5a4136",
+                    "surface-container-highest": "#e2e3df",
+                    "surface-container-high": "#e8e8e4",
+                    "tertiary": "#5e5f5a",
+                    "inverse-primary": "#ffb693",
+                    "on-tertiary-fixed": "#1b1c18",
+                    "outline-variant": "#e2bfb0",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#7a3000",
+                    "secondary-container": "#e5e2de",
+                    "surface-dim": "#dadad6",
+                    "background": "#faf9f5",
+                    "surface-container-low": "#f4f4f0",
+                    "tertiary-container": "#999993",
+                    "tertiary-fixed-dim": "#c7c7c0",
+                    "on-tertiary-fixed-variant": "#464742",
+                    "tertiary-fixed": "#e3e3dc",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eeeeea",
+                    "on-primary": "#ffffff",
+                    "outline": "#8e7164",
+                    "on-background": "#1a1c1a",
+                    "primary-fixed": "#ffdbcc",
+                    "primary-fixed-dim": "#ffb693",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf9f5",
+                    "on-secondary-container": "#656461",
+                    "on-secondary-fixed-variant": "#474744",
+                    "inverse-on-surface": "#f1f1ed",
+                    "primary-container": "#ff6b00",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1a1c1a",
+                    "on-secondary-fixed": "#1c1c1a",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2f312e",
+                    "surface-variant": "#e2e3df",
+                    "primary": "#a04100",
+                    "on-primary-fixed": "#351000",
+                    "secondary": "#5f5e5c",
+                    "surface-bright": "#faf9f5",
+                    "on-tertiary-container": "#30312d",
+                    "on-primary-container": "#572000",
+                    "surface-tint": "#a04100",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#e5e2de",
+                    "secondary-fixed-dim": "#c9c6c3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Epilogue"],
+                    "body": ["Space Grotesk"],
+                    "label": ["Space Grotesk"],
+                    "mono": ["Space Mono"],
+                    "caveat": ["Caveat"],
+                    "pen": ["Nanum Pen Script"],
+                    "reenie": ["Reenie Beanie"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .drafting-grid {
+            background-image: 
+                linear-gradient(to right, rgba(209, 209, 203, 0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(209, 209, 203, 0.2) 1px, transparent 1px),
+                linear-gradient(to right, rgba(209, 209, 203, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(209, 209, 203, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
+        }
+        .ink-stain {
+            background: radial-gradient(circle, rgba(26, 28, 26, 0.03) 0%, transparent 70%);
+            filter: blur(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .construction-line-x::after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 120%;
+            left: -10%;
+            background: #FF6B00;
+            opacity: 0.3;
+        }
+        .construction-line-y::after {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 120%;
+            top: -10%;
+            background: #FF6B00;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen drafting-grid">
+<!-- Top Navigation -->
+<header class="bg-[#FAF9F5] dark:bg-[#1A1C1A] border-b border-[#E2BFB0]/20 flex justify-between items-center w-full px-10 py-6 max-w-full sticky top-0 z-50">
+<div class="text-4xl font-bold font-caveat text-[#1A1C1A] dark:text-[#FAF9F5]">Kingdom Voices</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#FF6B00] border-b-2 border-[#FF6B00] pb-1 font-mono text-sm" href="#">Guidelines</a>
+<a class="text-[#1A1C1A] dark:text-[#FAF9F5] font-mono text-sm hover:text-[#FF6B00] transition-colors duration-100" href="#">Components</a>
+<a class="text-[#1A1C1A] dark:text-[#FAF9F5] font-mono text-sm hover:text-[#FF6B00] transition-colors duration-100" href="#">Assets</a>
+<a class="text-[#1A1C1A] dark:text-[#FAF9F5] font-mono text-sm hover:text-[#FF6B00] transition-colors duration-100" href="#">Templates</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#1A1C1A] dark:text-[#FAF9F5] cursor-pointer">history</span>
+<span class="material-symbols-outlined text-[#1A1C1A] dark:text-[#FAF9F5] cursor-pointer">settings</span>
+</div>
+</header>
+<!-- Side Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 flex flex-col pt-24 pb-8 px-6 z-40 bg-[#F4F4F0] dark:bg-[#121412] border-r border-[#C9C6C3]">
+<div class="mb-12">
+<h2 class="text-lg font-black font-space-mono text-[#1A1C1A] dark:text-[#FAF9F5] uppercase tracking-tighter">System v1.0</h2>
+<p class="font-caveat text-[#FF6B00] text-xl">Drafting Stage</p>
+</div>
+<nav class="flex flex-col gap-6">
+<a class="text-[#FF6B00] font-bold underline underline-offset-4 flex items-center gap-3 font-mono" href="#">
+<span class="material-symbols-outlined">grid_on</span> Drafting Table
+            </a>
+<a class="text-[#A0A09A] dark:text-[#666660] hover:text-[#1A1C1A] dark:hover:text-[#FAF9F5] flex items-center gap-3 font-mono transition-none" href="#">
+<span class="material-symbols-outlined">palette</span> Color Ink
+            </a>
+<a class="text-[#A0A09A] dark:text-[#666660] hover:text-[#1A1C1A] dark:hover:text-[#FAF9F5] flex items-center gap-3 font-mono transition-none" href="#">
+<span class="material-symbols-outlined">text_fields</span> Type Scales
+            </a>
+<a class="text-[#A0A09A] dark:text-[#666660] hover:text-[#1A1C1A] dark:hover:text-[#FAF9F5] flex items-center gap-3 font-mono transition-none" href="#">
+<span class="material-symbols-outlined">approval</span> Stamp Assets
+            </a>
+<a class="text-[#A0A09A] dark:text-[#666660] hover:text-[#1A1C1A] dark:hover:text-[#FAF9F5] flex items-center gap-3 font-mono transition-none" href="#">
+<span class="material-symbols-outlined">edit_note</span> Markup
+            </a>
+</nav>
+<div class="mt-auto relative pt-8 border-t border-[#C9C6C3]/30">
+<p class="font-pen text-[#A0A09A] text-lg rotate-[-2deg]">Check revision dates</p>
+</div>
+</aside>
+<main class="ml-64 p-10 max-w-7xl relative overflow-hidden">
+<!-- Background Elements -->
+<div class="absolute top-20 right-20 w-96 h-96 ink-stain pointer-events-none"></div>
+<div class="absolute bottom-40 left-10 w-64 h-64 border-[1px] border-outline-variant/10 rounded-full pointer-events-none"></div>
+<!-- Hero Section -->
+<section class="mb-20 relative">
+<div class="absolute -top-10 -left-10 font-mono text-[10px] text-outline-variant opacity-50 select-none">COORD: 40.7128° N, 74.0060° W</div>
+<div class="relative inline-block mb-12">
+<h1 class="font-caveat font-bold text-[72px] leading-none text-on-surface relative z-10">Kingdom Voices</h1>
+<div class="absolute top-1/2 left-0 w-full h-[1px] bg-primary-container/40 -translate-y-4"></div>
+<div class="absolute top-1/2 left-0 w-full h-[1px] bg-primary-container/40 translate-y-6"></div>
+<p class="font-pen text-primary-container text-2xl absolute -right-32 top-0 rotate-[4deg]">"Keep the soul, keep the grit"</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<!-- Brand Essence -->
+<div class="border border-[#A0A09A] p-8 relative bg-surface/50 backdrop-blur-sm">
+<span class="absolute -top-3 left-6 bg-surface px-2 font-mono text-xs text-[#A0A09A]">SECTION_01 / ESSENCE</span>
+<p class="font-body text-lg leading-relaxed mb-6">
+                        Our design philosophy is a dialogue between <span class="font-bold underline decoration-primary-container">technical precision</span> and <span class="font-caveat text-2xl font-bold">human warmth</span>. We reject the sterile. We embrace the ink bleed and the drafting guide.
+                    </p>
+<div class="flex gap-4">
+<div class="w-12 h-[1px] bg-on-surface mt-3"></div>
+<p class="font-mono text-xs text-secondary italic">System directive: 0px radius strictly enforced.</p>
+</div>
+</div>
+<!-- Technical Specs -->
+<div class="border border-[#A0A09A] p-8 relative bg-surface-container-low">
+<span class="absolute -top-3 left-6 bg-surface px-2 font-mono text-xs text-[#A0A09A]">SECTION_02 / SPECS</span>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-outline-variant/20 pb-2">
+<span class="font-mono text-xs uppercase opacity-60">Base Grid</span>
+<span class="font-mono text-sm font-bold">40.00 PX</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant/20 pb-2">
+<span class="font-mono text-xs uppercase opacity-60">Sub-division</span>
+<span class="font-mono text-sm font-bold">10.00 PX</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant/20 pb-2">
+<span class="font-mono text-xs uppercase opacity-60">Primary Ink</span>
+<span class="font-mono text-sm font-bold">HEX #1A1A18</span>
+</div>
+</div>
+<p class="font-reenie text-primary-container text-xl absolute -bottom-6 -right-4 rotate-[-3deg]">Measure twice, mark once</p>
+</div>
+</div>
+</section>
+<!-- Color Palette -->
+<section class="mb-20">
+<div class="flex items-center gap-4 mb-10">
+<h3 class="font-mono text-sm uppercase tracking-widest text-[#A0A09A]">Color_Ink_Archive</h3>
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-0">
+<div class="group relative">
+<div class="h-48 bg-[#F4F4F0] border border-outline-variant/30 flex flex-col justify-end p-4 transition-all group-hover:bg-opacity-90">
+<span class="font-mono text-[10px] text-secondary">SURFACE: PAPER</span>
+<span class="font-mono text-sm font-bold">#F4F4F0</span>
+</div>
+<div class="font-mono text-[8px] mt-2 opacity-50">C:3 M:2 Y:5 K:0</div>
+</div>
+<div class="group relative">
+<div class="h-48 bg-[#1A1A18] border border-outline-variant/30 flex flex-col justify-end p-4 transition-all">
+<span class="font-mono text-[10px] text-[#A0A09A]">BASE: INK</span>
+<span class="font-mono text-sm font-bold text-surface">#1A1A18</span>
+</div>
+<div class="font-mono text-[8px] mt-2 opacity-50">C:70 M:60 Y:60 K:90</div>
+</div>
+<div class="group relative">
+<div class="h-48 bg-[#A0A09A] border border-outline-variant/30 flex flex-col justify-end p-4 transition-all">
+<span class="font-mono text-[10px] text-on-surface">TECHNICAL: GRAPHITE</span>
+<span class="font-mono text-sm font-bold">#A0A09A</span>
+</div>
+<div class="font-mono text-[8px] mt-2 opacity-50">C:40 M:30 Y:30 K:10</div>
+</div>
+<div class="group relative">
+<div class="h-48 bg-[#FF6B00] border border-outline-variant/30 flex flex-col justify-end p-4 transition-all">
+<span class="font-mono text-[10px] text-on-primary">ACCENT: MARKER</span>
+<span class="font-mono text-sm font-bold text-white">#FF6B00</span>
+</div>
+<div class="font-mono text-[8px] mt-2 opacity-50">C:0 M:60 Y:100 K:0</div>
+</div>
+<div class="group relative">
+<div class="h-48 bg-[#D1D1CB] border border-outline-variant/30 flex flex-col justify-end p-4 transition-all">
+<span class="font-mono text-[10px] text-on-surface">GUIDE: RULER</span>
+<span class="font-mono text-sm font-bold">#D1D1CB</span>
+</div>
+<div class="font-mono text-[8px] mt-2 opacity-50">C:10 M:8 Y:12 K:0</div>
+</div>
+</div>
+</section>
+<!-- Typography -->
+<section class="mb-20">
+<div class="flex items-center gap-4 mb-10">
+<h3 class="font-mono text-sm uppercase tracking-widest text-[#A0A09A]">Typography_Scale</h3>
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Primary & Secondary -->
+<div class="space-y-12">
+<div class="relative">
+<span class="font-mono text-[10px] text-[#FF6B00] absolute -top-6">PRIMARY_DISPLAY</span>
+<h4 class="font-caveat font-bold text-6xl">Caveat Bold 700</h4>
+<p class="font-mono text-xs text-[#A0A09A] mt-2">Usage: Logotypes, High-Impact Headlines, Character moments.</p>
+</div>
+<div class="relative">
+<span class="font-mono text-[10px] text-[#FF6B00] absolute -top-6">TECHNICAL_BODY</span>
+<div class="font-mono text-2xl">Space Mono Regular/Bold</div>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<p class="font-mono text-sm leading-relaxed text-secondary italic">
+                                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br/>
+                                abcdefghijklmnopqrstuvwxyz<br/>
+                                0123456789 (.,;?!"'-)
+                            </p>
+<p class="font-mono text-[10px] text-[#A0A09A]">Fixed width character spacing ensures mathematical alignment across technical documents.</p>
+</div>
+</div>
+</div>
+<!-- Script Accents -->
+<div class="bg-white/40 p-8 border border-outline-variant/20 relative">
+<div class="absolute top-2 right-2">
+<span class="material-symbols-outlined text-[#FF6B00]/40 text-4xl">edit_note</span>
+</div>
+<div class="mb-10">
+<span class="font-mono text-[10px] text-secondary">ACCENT_SCRIPT</span>
+<h4 class="font-reenie text-5xl text-primary mt-2">Reenie Beanie Script</h4>
+<p class="font-pen text-on-surface/60 text-lg mt-2">Fine-tip editorial observations and emotional undercurrents.</p>
+</div>
+<div class="relative pt-6 border-t border-outline-variant/20">
+<span class="font-mono text-[10px] text-secondary">HANDWRITTEN_ANNOTATION</span>
+<h4 class="font-pen text-4xl text-[#FF6B00] mt-2">Nanum Pen Script</h4>
+<p class="font-pen text-on-surface text-xl mt-4 max-w-xs rotate-[1deg]">
+                            Used for marginalia, corrections, and "live" feedback layers during the drafting process.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Design Patterns & Motifs -->
+<section class="mb-20">
+<div class="flex items-center gap-4 mb-10">
+<h3 class="font-mono text-sm uppercase tracking-widest text-[#A0A09A]">Drafting_Patterns</h3>
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Motif: Grid Overlay -->
+<div class="aspect-square bg-surface border border-outline-variant p-6 relative overflow-hidden flex flex-col justify-between">
+<div class="absolute inset-0 drafting-grid opacity-50"></div>
+<div class="relative z-10 flex justify-between items-start">
+<span class="font-mono text-[10px] bg-white px-1">MOTIF_01: GRID</span>
+<span class="material-symbols-outlined text-xs">close</span>
+</div>
+<div class="relative z-10 space-y-2">
+<div class="w-full h-[1px] bg-primary-container/20"></div>
+<div class="w-full h-[1px] bg-primary-container/20"></div>
+<div class="w-full h-[1px] bg-primary-container/20"></div>
+</div>
+<p class="relative z-10 font-mono text-[10px] uppercase text-[#A0A09A]">40px architectural foundation</p>
+</div>
+<!-- Motif: Section Box -->
+<div class="aspect-square bg-white border border-outline-variant p-0 relative flex items-center justify-center">
+<div class="w-3/4 h-3/4 border border-[#A0A09A] relative p-6">
+<span class="absolute -top-3 left-4 bg-white px-2 font-mono text-[10px] text-[#A0A09A]">FLOATING_LABEL</span>
+<div class="w-4 h-4 border-t border-l border-primary-container absolute -top-[1px] -left-[1px]"></div>
+<div class="w-4 h-4 border-b border-r border-primary-container absolute -bottom-[1px] -right-[1px]"></div>
+<p class="font-mono text-[10px] text-center mt-4">Standard container with structural corner markers.</p>
+</div>
+<p class="font-pen text-primary text-lg absolute bottom-4 right-4 rotate-[-12deg]">Stamp it!</p>
+</div>
+<!-- Motif: Drafting Tools -->
+<div class="aspect-square bg-[#F4F4F0] border border-outline-variant p-6 relative flex flex-col items-center justify-center">
+<div class="w-40 h-40 border border-outline-variant/40 rounded-full flex items-center justify-center relative">
+<div class="absolute top-0 w-[1px] h-full bg-outline-variant/20"></div>
+<div class="absolute left-0 w-full h-[1px] bg-outline-variant/20"></div>
+<div class="w-32 h-32 border border-primary-container/30 rounded-full flex items-center justify-center">
+<span class="font-mono text-[8px] text-[#A0A09A]">PROTRACTOR_ALIGNMENT</span>
+</div>
+</div>
+<p class="mt-4 font-mono text-[10px] text-[#A0A09A] uppercase tracking-widest">Mathematical motifs</p>
+</div>
+</div>
+</section>
+<!-- Process Gallery (Bento Style) -->
+<section class="mb-20">
+<div class="grid grid-cols-12 grid-rows-2 gap-4 h-[600px]">
+<div class="col-span-8 row-span-1 bg-surface-container border border-outline-variant relative overflow-hidden">
+<img alt="Architectural drawing" class="w-full h-full object-cover grayscale opacity-40 mix-blend-multiply" data-alt="Technical architectural blueprint on weathered yellowing paper with graphite pencils and metal compass on a wooden desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh37cHcwmOmsYmMeWMWYkMvIAWCbm5Lo6kIHJxIXHRb1jzwV7bmRvF-GG0NhmbTiDL2HE6uC2lazoBCcUhwyE3f84oWYfhMTCoO1uRutaen1P-6w-akDtAgFXMATaMh2JChoJCZdPmJFk2uXkqQv-tZjoud34s8iqXDMapwciYVOzrZpo58Nh5ISLb1mYljksNE8xTofRkN_dnKAQIF1eD-5oFiEBXSX927OLIYD5brGco0g8_y_xIPKTKKGJHQVL92NSEjq6J_EZL"/>
+<div class="absolute inset-0 p-8 flex flex-col justify-end">
+<h4 class="font-caveat text-4xl font-bold">The Blueprint Phase</h4>
+<p class="font-mono text-xs max-w-sm mt-2">Every design starts with a rigorous assessment of spatial needs and material constraints.</p>
+</div>
+<div class="absolute top-4 right-4 bg-primary-container text-white p-2">
+<span class="material-symbols-outlined">architecture</span>
+</div>
+</div>
+<div class="col-span-4 row-span-2 bg-[#1A1A18] p-8 flex flex-col justify-between">
+<div>
+<span class="font-mono text-[10px] text-primary-container">SYSTEM_STAMP</span>
+<h4 class="font-caveat text-white text-5xl mt-4">Drafting Final</h4>
+</div>
+<div class="space-y-6">
+<div class="w-full h-[1px] bg-white/20"></div>
+<p class="font-pen text-[#A0A09A] text-2xl">Approved by Kingdom Voices Editorial Board</p>
+<div class="flex justify-between items-center text-white/40 font-mono text-[10px]">
+<span>REF: KV-2024-DS</span>
+<span>VER: 1.0.4a</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 row-span-1 border border-[#A0A09A] p-6 relative flex flex-col justify-center">
+<span class="font-mono text-[10px] absolute top-4 left-4 text-[#A0A09A]">ANNOTATION_L_04</span>
+<p class="font-reenie text-3xl text-center">"This is where the magic lives, in the margins."</p>
+<div class="absolute bottom-4 right-4">
+<span class="material-symbols-outlined text-primary-container">pentagon</span>
+</div>
+</div>
+<div class="col-span-4 row-span-1 bg-surface border border-outline-variant relative overflow-hidden group">
+<img alt="Handwriting" class="w-full h-full object-cover grayscale opacity-20" data-alt="Close-up of ink pen writing expressive calligraphy on textured paper with visible fiber and subtle ink splatters" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMZqRo9vXykPP_pXtRQybNW8Gv_0vRV3a24lC9rjj71JE0KjA-hnConyyf253xyFnHYUuxCXK4PY6L5_uc623sY2kOJ3OHSdv76VoDp0ghRJpGEvmlYe_cmbj0c_KEVuZmovPNOWf_ZV7ZDuDn_jKjD8A7PWuYV-PZd3LRm7qz8xs5d6DZ8hUbvMMgHtsJ1E1o0j2bxZYWe085XkyY64XPN9wLNQfAR8rysUZ2x45Wwd6a2rADjeU06FwEcpuqSV3IkY14gAHcjdLy"/>
+<div class="absolute inset-0 p-6 flex flex-col justify-center items-center text-center">
+<span class="font-mono text-[10px] text-[#A0A09A] mb-2">VOICE_LAYER</span>
+<p class="font-caveat text-2xl font-bold">Human Touch Protocol</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FAF9F5] dark:bg-[#1A1C1A] border-t border-[#E2BFB0]/20 flex justify-between items-center w-full px-10 py-8 relative">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+<div class="flex flex-col gap-1">
+<div class="font-space-mono uppercase tracking-widest text-xs font-bold text-on-surface">Kingdom Voices</div>
+<p class="font-mono text-[10px] text-[#A0A09A]">© 2024 Kingdom Voices - Technical Drafting Specs</p>
+</div>
+<div class="flex gap-8">
+<a class="font-mono text-[10px] uppercase text-[#A0A09A] hover:text-[#FF6B00] transition-colors" href="#">Documentation</a>
+<a class="font-mono text-[10px] uppercase text-[#A0A09A] hover:text-[#FF6B00] transition-colors" href="#">Process Log</a>
+<a class="font-mono text-[10px] uppercase text-[#A0A09A] hover:text-[#FF6B00] transition-colors" href="#">Changelog</a>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary-container rounded-full"></span>
+<span class="font-mono text-[10px] text-on-surface uppercase">Live Drafting</span>
+</div>
+<!-- Scribble on footer -->
+<p class="font-pen text-primary-container text-lg absolute -top-4 right-1/4 rotate-[-4deg]">Ship it 🚀</p>
+</footer>
+<!-- FAB (Suppressed as per rules for detailed design pages, but visually placed as stamp motif if needed) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="bg-[#A04100] text-white p-4 shadow-xl hover:bg-[#FF6B00] transition-colors duration-0 flex items-center justify-center group relative">
+<span class="material-symbols-outlined">edit</span>
+<span class="absolute right-full mr-4 bg-[#1A1A18] text-white text-[10px] font-mono py-1 px-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">NEW_DRAFT</span>
+</button>
+</div>
+</body></html>
