@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# MeetScribe
 
-Currently, two official plugins are available:
+**Turn meetings into transcripts and notes — in your browser, with your own API keys.**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/meetscribe-dist.zip)
+[![Welcome page — EN/中文 + tutorial](https://img.shields.io/badge/Welcome-EN%20%7C%20中文-6366f1?style=for-the-badge)](https://anne-creator.github.io/meetscribe/)
 
-## React Compiler
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+### Start here (no code required)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Download** the zip above (or open the **Welcome** page for the same button, bilingual tutorial, and pricing notes).
+2. **Unzip** and **double-click `index.html`** to open the app.
+3. Open **Settings**, paste an **OpenAI** or **Google Gemini** API key, save — about **one minute**.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The zip file **`meetscribe-dist.zip`** is attached to each [GitHub Release](https://github.com/anne-creator/meetscribe/releases/latest) when a release is published (automated build). If the download returns 404, create a new release or run `npm run build` and `npm run zip:dist` locally and zip the `dist` folder yourself.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**GitHub Pages:** enable **Settings → Pages → Build and deployment → GitHub Actions** so the Welcome site works at `https://anne-creator.github.io/meetscribe/`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+### 中文简要说明
+
+1. 点击上方紫色 **Download dist zip** 按钮下载压缩包（与 [Releases](https://github.com/anne-creator/meetscribe/releases/latest) 中的 `meetscribe-dist.zip` 相同）。  
+2. 解压后 **双击 `index.html`** 用浏览器打开。  
+3. 在 **设置** 里填入 **OpenAI** 或 **Gemini** 的 API 密钥并保存，约 **一分钟** 即可使用。  
+
+**完整中英对照、一键下载按钮与费用说明**请打开 [Welcome 页面](https://anne-creator.github.io/meetscribe/)（右上角可切换 **English / 中文**，默认跟随浏览器语言）。
+
+---
+
+### License
+
+**PolyForm Noncommercial 1.0.0** — source is open; **commercial use is not allowed**. See [`LICENSE`](./LICENSE).
+
+---
+
+### For developers
+
+```bash
+npm install
+npm run dev          # development
+npm run build        # production build → dist/
+npm run zip:dist     # dist → meetscribe-dist.zip (for manual upload)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Repository: [github.com/anne-creator/meetscribe](https://github.com/anne-creator/meetscribe)

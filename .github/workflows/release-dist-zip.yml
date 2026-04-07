@@ -1,0 +1,32 @@
+name: Attach dist zip to release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Create zip
+        run: cd dist && zip -r ../meetscribe-dist.zip .
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: meetscribe-dist.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

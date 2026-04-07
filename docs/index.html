@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeetScribe — Get started</title>
+  <meta name="description" content="MeetScribe: local meeting notes & transcription. Download, add your API key, and go." />
+  <style>
+    :root {
+      --bg: #0c0a12;
+      --surface: #161322;
+      --border: rgba(170, 59, 255, 0.22);
+      --text: #f4f0ff;
+      --muted: #9b92b5;
+      --accent: #aa3bff;
+      --accent-dim: #7c2db8;
+      --glow: rgba(170, 59, 255, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, var(--glow), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(99, 102, 241, 0.12), transparent);
+      z-index: 0;
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      box-shadow: 0 0 32px var(--glow);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand p {
+      margin: 0.15rem 0 0;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .lang-toggle button {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-toggle button[aria-pressed="true"] {
+      background: rgba(170, 59, 255, 0.2);
+      color: var(--text);
+    }
+    .lang-toggle button:hover { color: var(--text); }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem 1.35rem;
+      margin-bottom: 1.25rem;
+    }
+    section h2 {
+      margin: 0 0 1rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+    .download-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    a.btn-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 24px var(--glow);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.btn-download:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px var(--glow);
+    }
+    a.btn-download svg { flex-shrink: 0; }
+    .hint { font-size: 0.875rem; color: var(--muted); margin: 0; max-width: 36rem; }
+    ol.steps { margin: 0; padding-left: 1.2rem; }
+    ol.steps li { margin-bottom: 0.65rem; }
+    ol.steps li:last-child { margin-bottom: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.55rem 0.4rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .disclaimer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+    .license-box {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .license-box strong { color: var(--text); }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer a { color: var(--accent); }
+    [data-lang] { display: none; }
+    html[lang="en"] [data-lang="en"],
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="en"] [data-lang="en"].inline,
+    html[lang="zh"] [data-lang="zh"].inline { display: inline; }
+    .inline { display: none; }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">M</div>
+        <div>
+          <h1>MeetScribe</h1>
+          <p data-lang="en">Meeting notes &amp; transcription — runs in your browser.</p>
+          <p data-lang="zh">会议记录与转写 — 在浏览器本地运行。</p>
+        </div>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" id="btn-en" aria-pressed="false">English</button>
+        <button type="button" id="btn-zh" aria-pressed="false">中文</button>
+      </div>
+    </header>
+
+    <section aria-labelledby="sec-download">
+      <h2 id="sec-download">
+        <span data-lang="en">Download</span>
+        <span data-lang="zh">下载</span>
+      </h2>
+      <div class="download-row">
+        <a class="btn-download" id="download-link" href="https://github.com/anne-creator/meetscribe/releases/latest/download/meetscribe-dist.zip">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span data-lang="en">Download MeetScribe (zip)</span>
+          <span data-lang="zh">下载 MeetScribe（压缩包）</span>
+        </a>
+      </div>
+      <p class="hint" style="margin-top:1rem">
+        <span data-lang="en">Unzip the folder. You will see <strong>index.html</strong> — that is the app (single-file build).</span>
+        <span data-lang="zh">解压后找到 <strong>index.html</strong> — 即完整应用（单文件构建）。</span>
+      </p>
+    </section>
+
+    <section aria-labelledby="sec-tutorial">
+      <h2 id="sec-tutorial">
+        <span data-lang="en">1-minute setup</span>
+        <span data-lang="zh">一分钟上手</span>
+      </h2>
+      <ol class="steps">
+        <li data-lang="en"><strong>Double-click <code>index.html</code></strong> to open MeetScribe in your browser (Chrome or Edge recommended).</li>
+        <li data-lang="zh"><strong>双击 <code>index.html</code></strong> 在浏览器中打开（推荐使用 Chrome 或 Edge）。</li>
+        <li data-lang="en">Click <strong>Settings</strong> (or the key icon), paste your <strong>OpenAI</strong> or <strong>Google Gemini</strong> API key, pick the provider, and save. Keys stay in your browser only.</li>
+        <li data-lang="zh">打开 <strong>设置</strong>（或钥匙图标），粘贴 <strong>OpenAI</strong> 或 <strong>Google Gemini</strong> 的 API 密钥，选择服务商并保存。密钥仅保存在本机浏览器。</li>
+        <li data-lang="en">Load a video or record — transcription and chat are billed by the provider using your key.</li>
+        <li data-lang="zh">导入视频或开始录制 — 转写与对话按各平台规则、使用你的密钥计费。</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="sec-pricing">
+      <h2 id="sec-pricing">
+        <span data-lang="en">About API cost (reference)</span>
+        <span data-lang="zh">API 费用参考</span>
+      </h2>
+      <p class="hint" style="margin-bottom:1rem">
+        <span data-lang="en">Indicative prices only — providers change rates. Always check the official pages before you budget.</span>
+        <span data-lang="zh">以下为大致区间，厂商会调价，预算前请以官网为准。</span>
+      </p>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-lang="en">Item</span><span data-lang="zh">项目</span></th>
+              <th><span data-lang="en">Ballpark</span><span data-lang="zh">大致价格</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-lang="en">OpenAI speech-to-text (e.g. <code>whisper-1</code>)</span><span data-lang="zh">OpenAI 语音转文字（如 <code>whisper-1</code>）</span></td>
+              <td><span data-lang="en">~US$0.006 per minute of audio (billed per minute)</span><span data-lang="zh">约每分钟音频 US$0.006（按分钟计费）</span></td>
+            </tr>
+            <tr>
+              <td><span data-lang="en">Gemini transcription (default: Gemini 2.5 Flash)</span><span data-lang="zh">Gemini 转写（默认：Gemini 2.5 Flash）</span></td>
+              <td><span data-lang="en">Token-based (audio + text). For typical short clips, often <strong>similar to or lower than</strong> per-minute APIs; varies with length and output.</span><span data-lang="zh">按 token（音频+文本）。短片段经验上常与按分钟 API <strong>同量级或更低</strong>；随时长与输出变化。</span></td>
+            </tr>
+            <tr>
+              <td><span data-lang="en">OpenAI chat (default: <code>gpt-4o-mini</code>)</span><span data-lang="zh">OpenAI 对话（默认：<code>gpt-4o-mini</code>）</span></td>
+              <td><span data-lang="en">~US$0.15 / 1M input tokens, ~US$0.60 / 1M output — casual Q&amp;A is usually <strong>very small</strong> per session.</span><span data-lang="zh">约 US$0.15 / 百万输入 token、US$0.60 / 百万输出 — 日常短对话通常 <strong>极低</strong>。</span></td>
+            </tr>
+            <tr>
+              <td><span data-lang="en">OpenAI chat (<code>gpt-4o</code>)</span><span data-lang="zh">OpenAI 对话（<code>gpt-4o</code>）</span></td>
+              <td><span data-lang="en">Higher than mini — on the order of a few $/1M input and ~US$10+/1M output (see OpenAI pricing).</span><span data-lang="zh">高于 mini — 输入约数 $/百万 token，输出约 US$10+/百万（见 OpenAI 定价页）。</span></td>
+            </tr>
+            <tr>
+              <td><span data-lang="en">Gemini chat (e.g. Gemini 2.5 Pro)</span><span data-lang="zh">Gemini 对话（如 Gemini 2.5 Pro）</span></td>
+              <td><span data-lang="en">Tiered by context; often <strong>~US$1.25–2.50 / 1M input</strong> and <strong>~US$10–15 / 1M output</strong> (verify on Google AI pricing).</span><span data-lang="zh">按上下文分档；常见约 <strong>US$1.25–2.50 / 百万输入</strong>、<strong>US$10–15 / 百万输出</strong>（以 Google AI 定价为准）。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="disclaimer">
+        <span data-lang="en">Official: <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener">OpenAI pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini API pricing</a></span>
+        <span data-lang="zh">官网：<a href="https://openai.com/api/pricing/" target="_blank" rel="noopener">OpenAI 定价</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini API 定价</a></span>
+      </p>
+    </section>
+
+    <section aria-labelledby="sec-license">
+      <h2 id="sec-license">
+        <span data-lang="en">License</span>
+        <span data-lang="zh">许可协议</span>
+      </h2>
+      <div class="license-box">
+        <p data-lang="en"><strong>Open source — noncommercial.</strong> MeetScribe is licensed under the <strong>PolyForm Noncommercial License 1.0.0</strong>. You may use, study, and share it for <strong>noncommercial</strong> purposes. <strong>Commercial use is not allowed</strong> under this license. See the <code>LICENSE</code> file in the repository.</p>
+        <p data-lang="zh"><strong>开源，禁止商用。</strong> MeetScribe 使用 <strong>PolyForm Noncommercial License 1.0.0</strong>。你可以在<strong>非商业</strong>范围内使用、研究与分享；<strong>不得用于商业用途</strong>。完整条款见仓库中的 <code>LICENSE</code> 文件。</p>
+      </div>
+    </section>
+
+    <footer>
+      <span data-lang="en"><a href="https://github.com/anne-creator/meetscribe">Source on GitHub</a></span>
+      <span data-lang="zh"><a href="https://github.com/anne-creator/meetscribe">GitHub 源码</a></span>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var STORAGE = 'meetscribe_welcome_lang';
+      var downloadUrl = 'https://github.com/anne-creator/meetscribe/releases/latest/download/meetscribe-dist.zip';
+      var saved = localStorage.getItem(STORAGE);
+      var nav = (navigator.language || 'en').toLowerCase();
+      var initial = saved || (nav.startsWith('zh') ? 'zh' : 'en');
+      var root = document.documentElement;
+      var btnEn = document.getElementById('btn-en');
+      var btnZh = document.getElementById('btn-zh');
+      var link = document.getElementById('download-link');
+      link.setAttribute('href', downloadUrl);
+      link.setAttribute('download', 'meetscribe-dist.zip');
+
+      function setLang(lang) {
+        root.lang = lang;
+        localStorage.setItem(STORAGE, lang);
+        btnEn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+        btnZh.setAttribute('aria-pressed', lang === 'zh' ? 'true' : 'false');
+      }
+
+      setLang(initial);
+      btnEn.addEventListener('click', function () { setLang('en'); });
+      btnZh.addEventListener('click', function () { setLang('zh'); });
+    })();
+  </script>
+</body>
+</html>
