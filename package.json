@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:gemini": "node scripts/test-gemini.mjs",
-    "zip:dist": "cd dist && zip -r ../meetscribe-dist.zip ."
+    "zip:dist": "cd dist && zip -r ../dist.zip ."
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

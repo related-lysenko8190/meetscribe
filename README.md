@@ -4,8 +4,9 @@
 
 **Turn meetings into transcripts and notes — in your browser, with your own API keys.**
 
-[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/meetscribe-dist.zip)
-[![Welcome page — EN/中文 + tutorial](https://img.shields.io/badge/Welcome-EN%20%7C%20中文-6366f1?style=for-the-badge)](https://anne-creator.github.io/meetscribe/)
+[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip)
+
+[中文版说明 → README_chinese.md](./README_chinese.md)
 
 </div>
 
@@ -13,23 +14,28 @@
 
 ### Start here (no code required)
 
-1. **Download** the zip above (or open the **Welcome** page for the same button, bilingual tutorial, and pricing notes).
-2. **Unzip** and **double-click `index.html`** to open the app.
-3. Open **Settings**, paste an **OpenAI** or **Google Gemini** API key, save — about **one minute**.
+1. **Download** the zip using the button above (same file as [Releases](https://github.com/anne-creator/meetscribe/releases/latest) → `dist.zip`).
+2. **Unzip** the folder. Open **`index.html`** — that is the full app (single-file build). Double-click it, or open it with Chrome or Edge.
+3. Click **Settings** (or the key icon), paste your **OpenAI** or **Google Gemini** API key, choose the provider, and save. Keys stay in your browser only — about **one minute**.
+4. Load a video or start recording. Transcription and chat are billed by the provider using your key.
 
-The zip file **`meetscribe-dist.zip`** is attached to each [GitHub Release](https://github.com/anne-creator/meetscribe/releases/latest) when a release is published (automated build). If the download returns 404, create a new release or run `npm run build` and `npm run zip:dist` locally and zip the `dist` folder yourself.
-
-**GitHub Pages:** enable **Settings → Pages → Build and deployment → GitHub Actions** so the Welcome site works at `https://anne-creator.github.io/meetscribe/`.
+If the download returns **404**, the release may not include `dist.zip` yet. Create a new release (the [workflow](.github/workflows/release-dist-zip.yml) attaches it automatically), or run `npm run build` and `npm run zip:dist` locally and upload `dist.zip` to the release yourself.
 
 ---
 
-### 中文简要说明
+### API cost (reference only)
 
-1. 点击上方紫色 **Download dist zip** 按钮下载压缩包（与 [Releases](https://github.com/anne-creator/meetscribe/releases/latest) 中的 `meetscribe-dist.zip` 相同）。  
-2. 解压后 **双击 `index.html`** 用浏览器打开。  
-3. 在 **设置** 里填入 **OpenAI** 或 **Gemini** 的 API 密钥并保存，约 **一分钟** 即可使用。  
+Indicative prices — providers change rates. Check official pages before you budget.
 
-**完整中英对照、一键下载按钮与费用说明**请打开 [Welcome 页面](https://anne-creator.github.io/meetscribe/)（右上角可切换 **English / 中文**，默认跟随浏览器语言）。
+| Item | Ballpark |
+|------|----------|
+| OpenAI speech-to-text (e.g. `whisper-1`) | ~US$0.006 per minute of audio (billed per minute) |
+| Gemini transcription (default: Gemini 2.5 Flash) | Token-based (audio + text). For typical short clips, often **similar to or lower than** per-minute APIs; varies with length and output. |
+| OpenAI chat (default: `gpt-4o-mini`) | ~US$0.15 / 1M input tokens, ~US$0.60 / 1M output — casual Q&A is usually **very small** per session. |
+| OpenAI chat (`gpt-4o`) | Higher than mini — on the order of a few $/1M input and ~US$10+/1M output (see OpenAI pricing). |
+| Gemini chat (e.g. Gemini 2.5 Pro) | Tiered by context; often **~US$1.25–2.50 / 1M input** and **~US$10–15 / 1M output** (verify on Google AI pricing). |
+
+Official: [OpenAI pricing](https://openai.com/api/pricing/) · [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing)
 
 ---
 
@@ -45,7 +51,7 @@ The zip file **`meetscribe-dist.zip`** is attached to each [GitHub Release](http
 npm install
 npm run dev          # development
 npm run build        # production build → dist/
-npm run zip:dist     # dist → meetscribe-dist.zip (for manual upload)
+npm run zip:dist     # dist → dist.zip (for manual upload)
 ```
 
 Repository: [github.com/anne-creator/meetscribe](https://github.com/anne-creator/meetscribe)

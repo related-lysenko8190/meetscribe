@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-meetscribe-dist.zip
+dist.zip
 *.local
 
 # Editor directories and files

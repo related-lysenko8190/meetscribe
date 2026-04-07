@@ -22,11 +22,11 @@ jobs:
       - run: npm run build
 
       - name: Create zip
-        run: cd dist && zip -r ../meetscribe-dist.zip .
+        run: cd dist && zip -r ../dist.zip .
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          files: meetscribe-dist.zip
+          files: dist.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
