@@ -8,25 +8,46 @@ export type AppPhase =
   | 'processing'
   | 'transcript_ready'
 
+// ─── Service Stack ───────────────────────────────────────────────────────────
+
+export type ServiceStack = 'gemini' | 'openai'
+
+export const DEFAULT_SERVICE_STACK: ServiceStack = 'gemini'
+
 // ─── Settings ────────────────────────────────────────────────────────────────
 
 export interface AppSettings {
-  apiKey: string
-  model: string // e.g. 'gemini-2.5-flash', 'gemini-3-flash-preview'
+  serviceStack: ServiceStack
+  geminiApiKey: string
+  geminiModel: string
+  openaiApiKey: string
+  openaiChatModel: string
+  whisperModel: string
 }
 
-export const DEFAULT_MODEL = 'gemini-2.5-flash'
+export const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash'
 
-/** Model ids removed from Settings; migrate saved preferences to DEFAULT_MODEL. */
+export const DEFAULT_WHISPER_MODEL = 'whisper-1'
+
+export const DEFAULT_OPENAI_CHAT_MODEL = 'gpt-4o-mini'
+
+/** Model ids removed from Settings; migrate saved preferences to DEFAULT_GEMINI_MODEL. */
 export const DEPRECATED_GEMINI_MODEL_IDS = [
   'gemini-2.0-flash',
   'gemini-2.0-flash-lite',
   'gemini-1.5-flash',
 ] as const
 
-export const AVAILABLE_MODELS = [
+export const AVAILABLE_GEMINI_MODELS = [
   { id: 'gemini-3-flash-preview', label: 'Gemini 3 Flash (preview)' },
   { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
+] as const
+
+export const AVAILABLE_OPENAI_CHAT_MODELS = [
+  { id: 'gpt-4o-mini', label: 'GPT-4o Mini' },
+  { id: 'gpt-4o', label: 'GPT-4o' },
+  { id: 'gpt-4.1-mini', label: 'GPT-4.1 Mini' },
+  { id: 'gpt-4.1-nano', label: 'GPT-4.1 Nano' },
 ] as const
 
 // ─── Transcript ──────────────────────────────────────────────────────────────
@@ -96,13 +117,20 @@ export const SPEAKER_COLORS = [
 // ─── Provider Interfaces ─────────────────────────────────────────────────────
 
 export interface SettingsState {
-  apiKey: string
-  model: string
+  serviceStack: ServiceStack
+  geminiApiKey: string
+  geminiModel: string
+  openaiApiKey: string
+  openaiChatModel: string
+  whisperModel: string
 }
 
 export interface SettingsActions {
-  setApiKey: (key: string) => void
-  setModel: (model: string) => void
+  setServiceStack: (stack: ServiceStack) => void
+  setGeminiApiKey: (key: string) => void
+  setGeminiModel: (model: string) => void
+  setOpenaiApiKey: (key: string) => void
+  setOpenaiChatModel: (model: string) => void
 }
 
 export interface AppState {

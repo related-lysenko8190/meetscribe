@@ -14,7 +14,7 @@ import type {
 } from '@/lib/types'
 import { useSettings } from './settings-provider'
 import { useApp } from './app-provider'
-import { runTranscription } from '@/core/transcription-engine'
+import { runTranscription, type TranscriptionConfig } from '@/core/transcription-engine'
 
 interface TranscriptionContextValue {
   state: TranscriptionState
@@ -34,8 +34,15 @@ export function TranscriptionProvider({ children }: { children: ReactNode }) {
 
   const transcribe = useCallback(
     async (videoBlob: Blob) => {
-      if (!settings.apiKey) {
-        setError('API key is required. Please set your Gemini API key in settings.')
+      const isOpenAI = settings.serviceStack === 'openai'
+      const activeKey = isOpenAI ? settings.openaiApiKey : settings.geminiApiKey
+
+      if (!activeKey) {
+        setError(
+          isOpenAI
+            ? 'OpenAI API key is required. Please set it in Settings.'
+            : 'Gemini API key is required. Please set it in Settings.'
+        )
         return
       }
 
@@ -46,7 +53,15 @@ export function TranscriptionProvider({ children }: { children: ReactNode }) {
 
       appActions.startProcessing()
 
-      await runTranscription(videoBlob, settings.apiKey, settings.model, {
+      const config: TranscriptionConfig = {
+        stack: settings.serviceStack,
+        geminiApiKey: settings.geminiApiKey,
+        geminiModel: settings.geminiModel,
+        openaiApiKey: settings.openaiApiKey,
+        whisperModel: settings.whisperModel,
+      }
+
+      await runTranscription(videoBlob, config, {
         onProgress: (p: ProcessingProgress) => {
           setProgress(p)
         },
@@ -63,7 +78,7 @@ export function TranscriptionProvider({ children }: { children: ReactNode }) {
         },
       })
     },
-    [settings.apiKey, settings.model, appActions]
+    [settings, appActions]
   )
 
   const actions = useMemo<TranscriptionActions>(

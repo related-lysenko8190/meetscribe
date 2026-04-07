@@ -1,8 +1,17 @@
-import type { TranscriptSegment, ProcessingProgress, ProcessingStep } from '@/lib/types'
+import type { TranscriptSegment, ProcessingProgress, ProcessingStep, ServiceStack } from '@/lib/types'
 import { generateId } from '@/lib/utils'
 import { extractAudio } from './audio-extractor'
 import { chunkAudio } from './audio-chunker'
 import { transcribeAudio } from './gemini-client'
+import { transcribeAudioWhisper, WHISPER_MAX_CHUNK_DURATION_SEC } from './openai-whisper-client'
+
+export interface TranscriptionConfig {
+  stack: ServiceStack
+  geminiApiKey: string
+  geminiModel: string
+  openaiApiKey: string
+  whisperModel: string
+}
 
 export interface TranscriptionCallbacks {
   onProgress: (progress: ProcessingProgress) => void
@@ -10,7 +19,7 @@ export interface TranscriptionCallbacks {
   onError: (error: Error) => void
 }
 
-function createSteps(totalChunks: number): ProcessingStep[] {
+function createSteps(totalChunks: number, isWhisper: boolean): ProcessingStep[] {
   const steps: ProcessingStep[] = [
     { id: 'extract', label: 'Extracting audio', status: 'pending' },
     { id: 'chunk', label: 'Splitting into chunks', status: 'pending' },
@@ -25,7 +34,7 @@ function createSteps(totalChunks: number): ProcessingStep[] {
   }
 
   steps.push(
-    { id: 'diarize', label: 'Speaker diarization', status: 'pending' },
+    { id: 'diarize', label: isWhisper ? 'Merging transcript' : 'Speaker diarization', status: 'pending' },
     { id: 'finalize', label: 'Finalizing transcript', status: 'pending' }
   )
 
@@ -56,13 +65,11 @@ function deduplicateSegments(
 ): RawSegment[] {
   if (rawSegments.length === 0) return []
 
-  // Sort by start time
   const sorted = [...rawSegments].sort((a, b) => a.startTime - b.startTime)
 
   const result: RawSegment[] = []
 
   for (const seg of sorted) {
-    // Check if this segment overlaps significantly with an already-kept segment
     const duplicate = result.find(
       (existing) =>
         Math.abs(existing.startTime - seg.startTime) < 2 &&
@@ -71,8 +78,6 @@ function deduplicateSegments(
     )
 
     if (duplicate) {
-      // For overlapping segments, prefer the one where the timestamp
-      // is further from the chunk edge (more reliable)
       const dupDistFromEdge = Math.min(
         duplicate.startTime - duplicate.chunkStartTime,
         duplicate.chunkStartTime + duplicate.chunkDuration - duplicate.endTime
@@ -83,14 +88,10 @@ function deduplicateSegments(
       )
 
       if (segDistFromEdge > dupDistFromEdge) {
-        // Replace with the better segment
         const idx = result.indexOf(duplicate)
         result[idx] = seg
       }
-      // Otherwise keep the existing one
     } else {
-      // Check if this segment falls in an overlap region and might be a
-      // near-duplicate of another segment (looser text matching)
       const isInOverlap = result.some(
         (existing) =>
           existing.chunkIndex !== seg.chunkIndex &&
@@ -109,12 +110,11 @@ function deduplicateSegments(
 
 export async function runTranscription(
   videoBlob: Blob,
-  apiKey: string,
-  model: string,
+  config: TranscriptionConfig,
   callbacks: TranscriptionCallbacks
 ): Promise<void> {
-  // We'll build the steps incrementally once we know chunk count
-  let steps: ProcessingStep[] = createSteps(1) // placeholder
+  const isWhisper = config.stack === 'openai'
+  let steps: ProcessingStep[] = createSteps(1, isWhisper)
 
   const emitProgress = (
     currentChunk: number,
@@ -130,7 +130,6 @@ export async function runTranscription(
   }
 
   try {
-    // Step 1: Extract audio
     steps = updateStep(steps, 'extract', 'active')
     emitProgress(0, 0)
 
@@ -139,21 +138,19 @@ export async function runTranscription(
     steps = updateStep(steps, 'extract', 'done')
     emitProgress(0, 0)
 
-    // Step 2: Chunk audio
     steps = updateStep(steps, 'chunk', 'active')
     emitProgress(0, 0)
 
-    const chunks = await chunkAudio(wavBlob)
+    const maxDuration = isWhisper ? WHISPER_MAX_CHUNK_DURATION_SEC : 1200
+    const chunks = await chunkAudio(wavBlob, maxDuration)
 
     steps = updateStep(steps, 'chunk', 'done')
 
-    // Now rebuild steps with correct chunk count
-    steps = createSteps(chunks.length)
+    steps = createSteps(chunks.length, isWhisper)
     steps = updateStep(steps, 'extract', 'done')
     steps = updateStep(steps, 'chunk', 'done')
     emitProgress(0, chunks.length)
 
-    // Step 3: Transcribe each chunk
     const allRawSegments: RawSegment[] = []
     const chunkTimes: number[] = []
 
@@ -162,7 +159,6 @@ export async function runTranscription(
       const stepId = `transcribe-${i}`
       steps = updateStep(steps, stepId, 'active')
 
-      // Estimate time remaining based on average chunk processing time
       const avgTime =
         chunkTimes.length > 0
           ? chunkTimes.reduce((a, b) => a + b, 0) / chunkTimes.length
@@ -173,7 +169,11 @@ export async function runTranscription(
       emitProgress(i + 1, chunks.length, remaining)
 
       const startTime = Date.now()
-      const result = await transcribeAudio(apiKey, model, chunk.blob, chunk.startTime)
+
+      const result = isWhisper
+        ? await transcribeAudioWhisper(config.openaiApiKey, config.whisperModel, chunk.blob, chunk.startTime)
+        : await transcribeAudio(config.geminiApiKey, config.geminiModel, chunk.blob, chunk.startTime)
+
       const elapsed = (Date.now() - startTime) / 1000
       chunkTimes.push(elapsed)
 
@@ -190,7 +190,6 @@ export async function runTranscription(
       emitProgress(i + 1, chunks.length)
     }
 
-    // Step 4: Speaker diarization / deduplication
     steps = updateStep(steps, 'diarize', 'active')
     emitProgress(chunks.length, chunks.length)
 
@@ -198,11 +197,9 @@ export async function runTranscription(
 
     steps = updateStep(steps, 'diarize', 'done')
 
-    // Step 5: Finalize
     steps = updateStep(steps, 'finalize', 'active')
     emitProgress(chunks.length, chunks.length)
 
-    // Build speaker index map
     const speakerMap = new Map<string, number>()
     let nextIndex = 0
     for (const seg of deduped) {
@@ -211,7 +208,6 @@ export async function runTranscription(
       }
     }
 
-    // Sort by start time and create final segments
     const sortedSegments = deduped
       .sort((a, b) => a.startTime - b.startTime)
       .map(

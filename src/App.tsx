@@ -239,7 +239,7 @@ function AppContent() {
     <div className="flex flex-col h-screen bg-surface drafting-grid">
       <HeaderBar
         phase={phase}
-        apiKey={settings.apiKey}
+        apiKey={settings.serviceStack === 'openai' ? settings.openaiApiKey : settings.geminiApiKey}
         onOpenSettings={() => setSettingsOpen(true)}
       />
 
@@ -338,10 +338,16 @@ function AppContent() {
       <SettingsDialog
         open={settingsOpen}
         onOpenChange={setSettingsOpen}
-        apiKey={settings.apiKey}
-        model={settings.model}
-        onSaveApiKey={settingsActions.setApiKey}
-        onSaveModel={settingsActions.setModel}
+        serviceStack={settings.serviceStack}
+        geminiApiKey={settings.geminiApiKey}
+        geminiModel={settings.geminiModel}
+        openaiApiKey={settings.openaiApiKey}
+        openaiChatModel={settings.openaiChatModel}
+        onSaveServiceStack={settingsActions.setServiceStack}
+        onSaveGeminiApiKey={settingsActions.setGeminiApiKey}
+        onSaveGeminiModel={settingsActions.setGeminiModel}
+        onSaveOpenaiApiKey={settingsActions.setOpenaiApiKey}
+        onSaveOpenaiChatModel={settingsActions.setOpenaiChatModel}
       />
 
       <ExportOverlay

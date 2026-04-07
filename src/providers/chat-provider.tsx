@@ -11,7 +11,7 @@ import type { ChatMessage, ChatState, ChatActions } from '@/lib/types'
 import { generateId } from '@/lib/utils'
 import { useSettings } from './settings-provider'
 import { useTranscription } from './transcription-provider'
-import { chatWithTranscript } from '@/core/chat-engine'
+import { chatWithTranscript, type ChatConfig } from '@/core/chat-engine'
 
 interface ChatContextValue {
   state: ChatState
@@ -31,11 +31,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const send = useCallback(
     async (question: string) => {
       if (isStreaming) return
-      if (!settings.apiKey) return
+
+      const isOpenAI = settings.serviceStack === 'openai'
+      const activeKey = isOpenAI ? settings.openaiApiKey : settings.geminiApiKey
+      if (!activeKey) return
 
       abortRef.current = false
 
-      // Add user message
       const userMessage: ChatMessage = {
         id: generateId(),
         role: 'user',
@@ -43,7 +45,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         timestamp: Date.now(),
       }
 
-      // Create initial assistant message
       const assistantMessage: ChatMessage = {
         id: generateId(),
         role: 'assistant',
@@ -54,10 +55,17 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       setMessages((prev) => [...prev, userMessage, assistantMessage])
       setIsStreaming(true)
 
+      const chatConfig: ChatConfig = {
+        stack: settings.serviceStack,
+        geminiApiKey: settings.geminiApiKey,
+        geminiModel: settings.geminiModel,
+        openaiApiKey: settings.openaiApiKey,
+        openaiChatModel: settings.openaiChatModel,
+      }
+
       try {
         const generator = chatWithTranscript(
-          settings.apiKey,
-          settings.model,
+          chatConfig,
           transcription.segments,
           question
         )
@@ -89,7 +97,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setIsStreaming(false)
       }
     },
-    [isStreaming, settings.apiKey, settings.model, transcription.segments]
+    [isStreaming, settings, transcription.segments]
   )
 
   const clear = useCallback(() => {
