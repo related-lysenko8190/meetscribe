@@ -12,15 +12,21 @@ export type AppPhase =
 
 export interface AppSettings {
   apiKey: string
-  model: string // e.g. 'gemini-2.0-flash-lite', 'gemini-2.0-flash'
+  model: string // e.g. 'gemini-2.5-flash', 'gemini-3-flash-preview'
 }
 
-export const DEFAULT_MODEL = 'gemini-2.0-flash'
+export const DEFAULT_MODEL = 'gemini-2.5-flash'
+
+/** Model ids removed from Settings; migrate saved preferences to DEFAULT_MODEL. */
+export const DEPRECATED_GEMINI_MODEL_IDS = [
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-lite',
+  'gemini-1.5-flash',
+] as const
 
 export const AVAILABLE_MODELS = [
-  { id: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' },
-  { id: 'gemini-2.0-flash-lite', label: 'Gemini 2.0 Flash Lite' },
-  { id: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
+  { id: 'gemini-3-flash-preview', label: 'Gemini 3 Flash (preview)' },
+  { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
 ] as const
 
 // ─── Transcript ──────────────────────────────────────────────────────────────
@@ -110,6 +116,8 @@ export interface AppActions {
   startProcessing: () => void
   finishProcessing: () => void
   reset: () => void
+  /** Dev/debug only: bypass state-machine guards to jump to any phase */
+  _setPhase: (phase: AppPhase) => void
 }
 
 export interface RecordingState {
