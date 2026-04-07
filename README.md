@@ -14,7 +14,7 @@
 
 ### Start here (no code required)
 
-1. **Download** the zip using the button above (same file as [Releases](https://github.com/anne-creator/meetscribe/releases/latest) → `dist.zip`).
+1. **Download** the zip [![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip)using the button above (same file as [Releases](https://github.com/anne-creator/meetscribe/releases/latest) → `dist.zip`).
 2. **Unzip** the folder. Open **`index.html`** — that is the full app (single-file build). Double-click it, or open it with Chrome or Edge.
 3. Click **Settings** (or the key icon), paste your **OpenAI** or **Google Gemini** API key, choose the provider, and save. Keys stay in your browser only — about **one minute**.
 4. Load a video or start recording. Transcription and chat are billed by the provider using your key.
