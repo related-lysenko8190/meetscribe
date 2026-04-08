@@ -1,16 +1,18 @@
+
 <div align="center">
+  
+###### [English](README.md)  |  [中文版](README_chinese.md) 
 
 # 🎙️ MeetScribe
-
 **Turn any meeting into searchable transcripts and smart notes.**<br>
+
 One HTML file. No pay, No install. No sign-up. Runs by double click.
-**If MeetScribe saves you time, consider giving it a ⭐**
+
+**actively maintianing... consider giving it a ⭐ before downloading, thanks!!!**
 
 [![GitHub stars](https://img.shields.io/github/stars/anne-creator/meetscribe?style=social)](https://github.com/anne-creator/meetscribe)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20NC%201.0-blue)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-
-[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip) · [中文版说明 →](README_chinese.md)
 
 <img src="docs/demo.gif" alt="MeetScribe demo" width="720">
 
@@ -20,7 +22,7 @@ One HTML file. No pay, No install. No sign-up. Runs by double click.
 
 ## Why MeetScribe?
 
-Most meeting transcription tools ask you to pay $20+ monthly subscription, create account and store your video in other people's platform. MeetScribe does none.
+Need a tool that take the recording of a mixed lanuage meeting, but cost nothing and also can export transcribe and talk with AI? MeetScribe can do them all.
 
 You download one file, open it in Chrome, and everything happens on your computer. Your recordings, transcripts, and conversations never leave your browser. You bring your own API key from Google or OpenAI, so there's no middleman and no recurring fee.
 
@@ -28,23 +30,32 @@ You download one file, open it in Chrome, and everything happens on your compute
 
 🔒 **Private by design** — Your video, audio, and transcripts stay on your machine.
 
-🗣️ **Knows who's talking** — Automatic speaker diarization labels each person in the conversation (Speaker 1, Speaker 2, etc.) with timestamps.
+🗣️ **Knows who's talking** — Automatically labels each person in the conversation (Speaker 1, Speaker 2, etc.) with timestamps.
 
-🌏 **Speaks your language mix** — Built for real-world meetings where auto language detection, support mixed-language. 
+🌏 **Speaks your language mix** — Built for real-world meetings with mixed-language support. Auto-detects language without configuration.
 
-💬 **Ask your meeting questions** — Built-in chat lets you summarize, and ask questins about the audio.
+💬 **Ask your meeting questions** — Built-in chat lets you summarize and ask questions about the transcript.
 
-📦 **One file, zero install** — Double-click it to use the product in browser like a web application.
+🔍 **Transcript search** — Search by keyword to find specific moments without re-watching.
 
-💸 **Free to use** — MeetScribe itself costs nothing. You only pay your API provider (gemini has free tier and way cheaper than subscriptions, only pay as you go)
+🔗 **Interactive transcript** — Click any line to jump to that moment in the video. Current segment highlights as the video plays.
 
+📦 **Multi-format export** — Export transcripts as Markdown, SRT subtitles, or JSON. Download the video and chat history too.
+
+🤖 **AI chat** — Ask questions about the meeting. Get summaries, action items, or specific speaker quotes.
+
+📂 **One file, zero install** — The entire app is a single HTML file. Double-click to open in any browser.
+
+💸 **Free to use** — MeetScribe itself replaced your $25 subscription meeting recorder. You only pay your API provider for what you use. Gemini's free tier covers most personal use. 
 ---
 
 ## Get started in 3 minutes
 
-### Step 1: Download MeetScribe
+### Step 1: Download and Open MeetScribe File
 
-Go to [**Releases**](https://github.com/anne-creator/meetscribe/releases), download `dist.zip`, and unzip it. You'll find `index.html` inside.
+[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip) 
+
+Unzip and double clikc the file index.html
 
 ### Step 2: Get an API key (pick one)
 
@@ -81,28 +92,11 @@ Pricing: ~$0.006/min for transcription (Whisper). A 1-hour meeting costs roughly
 ### Step 3: Open and go
 
 1. Double-click `index.html` — it opens in your browser
-2. Click the **Settings** icon, paste your API key, choose your provider, and save
-3. Record your screen or drop an existing video
-4. After the meeting, click **Transcribe** and wait a few minutes
-5. Read, search, chat, and export
+<img width="189" height="108" alt="Screenshot 2026-04-07 at 9 19 37 PM" src="https://github.com/user-attachments/assets/2f4f83fb-4c63-44e2-a715-b76dab4ef164" />
 
+
+2. Click the **Settings** icon at right top, paste your API key, choose your provider, and save
 API key is saved in your browser's local storage. You won't need to enter it again unless you clear your browser data.
-
----
-
-## Features
-
-| Feature | What it does |
-|---|---|
-| **Screen recording** | Record any screen, window, or browser tab with system audio + microphone. 3-second countdown so you can switch to your content. |
-| **Video import** | Already have a recording? Drag and drop `.webm`, `.mp4`, or `.mkv` files. |
-| **Speaker diarization** | Automatically identifies different speakers and labels them throughout the transcript. |
-| **Mixed-language transcription** | Handles English, Chinese, and code-switching between languages in the same sentence. |
-| **Interactive transcript** | Click any line to jump to that moment in the video. Current segment highlights as the video plays. |
-| **Transcript search** | Search by keyword to find specific moments without re-watching. |
-| **AI chat** | Ask questions about the meeting. Get summaries, action items, or specific speaker quotes. |
-| **Subtitle overlay** | Optional subtitles displayed directly on the video player. |
-| **Multi-format export** | Export transcripts as Markdown, SRT subtitles, or JSON. Download the video and chat history too. |
 
 ---
 
@@ -133,10 +127,7 @@ Official pricing: [Google Gemini](https://ai.google.dev/gemini-api/docs/pricing)
 
 **Developers** — Fork it, extend it, build on it. The codebase is clean and contributions are welcome.
 
-
 **Tech stack:** Single-file HTML build, Gemini/OpenAI API (client-side), `getDisplayMedia` for screen capture, `getUserMedia` for microphone, Web Audio API for stream mixing.
-
-If the release download returns 404, the release may not include `dist.zip` yet. Create a new release (the CI workflow attaches it automatically), or run `npm run build && npm run zip:dist` locally and upload `dist.zip` to the release.
 
 ---
 
