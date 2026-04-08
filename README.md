@@ -2,7 +2,7 @@
   
 ###### [English](README.md)  |  [中文版](README_chinese.md) 
 
-# 🎙️ MeetScribe
+# <img src="public/favicon.svg" alt="MeetScribe logo" width="30"> MeetScribe
 [![GitHub stars](https://img.shields.io/github/stars/anne-creator/meetscribe?style=social)](https://github.com/anne-creator/meetscribe)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20NC%201.0-blue)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
