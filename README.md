@@ -1,15 +1,8 @@
-
 <div align="center">
   
 ###### [English](README.md)  |  [中文版](README_chinese.md) 
 
 # 🎙️ MeetScribe
-**Turn any meeting into searchable transcripts and smart notes.**<br>
-
-One HTML file. No pay, No install. No sign-up. Runs by double click.
-
-**actively maintianing... consider giving it a ⭐ before downloading, thanks!!!**
-
 [![GitHub stars](https://img.shields.io/github/stars/anne-creator/meetscribe?style=social)](https://github.com/anne-creator/meetscribe)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20NC%201.0-blue)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
@@ -21,10 +14,15 @@ One HTML file. No pay, No install. No sign-up. Runs by double click.
 ---
 
 ## Why MeetScribe?
+My meetings often switch between English and Mandarin mid-sentence. Every meeting tool I tried handled this badly, or expensively, or both.
 
-Need a tool that take the recording of a mixed lanuage meeting, but cost nothing and also can export transcribe and talk with AI? MeetScribe can do them all.
+Otter.ai handles timestamps well but breaks on mixed language. Notion AI handles mixed language but throws away your recording. Granola does neither well. So I built MeetScribe.
 
-You download one file, open it in Chrome, and everything happens on your computer. Your recordings, transcripts, and conversations never leave your browser. You bring your own API key from Google or OpenAI, so there's no middleman and no recurring fee.
+One HTML file. No pay, No install. No sign-up. Runs by double click.
+
+⭐ if it helps, many ❤️❤️❤️
+
+<img width="858" height="193" alt="Screenshot 2026-04-07 at 9 42 46 PM" src="https://github.com/user-attachments/assets/a20879af-4591-48d1-864e-04766bff6bb2" />
 
 ### What makes it different
 
@@ -42,11 +40,10 @@ You download one file, open it in Chrome, and everything happens on your compute
 
 📦 **Multi-format export** — Export transcripts as Markdown, SRT subtitles, or JSON. Download the video and chat history too.
 
-🤖 **AI chat** — Ask questions about the meeting. Get summaries, action items, or specific speaker quotes.
-
 📂 **One file, zero install** — The entire app is a single HTML file. Double-click to open in any browser.
 
-💸 **Free to use** — MeetScribe itself replaced your $25 subscription meeting recorder. You only pay your API provider for what you use. Gemini's free tier covers most personal use. 
+💸 **Free to use** - MeetScribe itself replaced your $25 subscription meeting recorder. You only pay your API provider for what you use. Gemini's free tier covers most personal use. 
+
 ---
 
 ## Get started in 3 minutes
@@ -55,7 +52,7 @@ You download one file, open it in Chrome, and everything happens on your compute
 
 [![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip) 
 
-Unzip and double clikc the file index.html
+Unzip and double-click the file index.html
 
 ### Step 2: Get an API key (pick one)
 
