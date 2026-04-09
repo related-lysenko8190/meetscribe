@@ -143,6 +143,7 @@ export interface AppActions {
   loadVideo: (blob: Blob, fileName: string) => void
   startProcessing: () => void
   finishProcessing: () => void
+  failProcessing: () => void
   reset: () => void
   /** Dev/debug only: bypass state-machine guards to jump to any phase */
   _setPhase: (phase: AppPhase) => void

@@ -5,6 +5,8 @@ import { chunkAudio } from './audio-chunker'
 import { transcribeAudio } from './gemini-client'
 import { transcribeAudioWhisper, WHISPER_MAX_CHUNK_DURATION_SEC } from './openai-whisper-client'
 
+const GEMINI_MAX_CHUNK_DURATION_SEC = 300
+
 export interface TranscriptionConfig {
   stack: ServiceStack
   geminiApiKey: string
@@ -115,6 +117,7 @@ export async function runTranscription(
 ): Promise<void> {
   const isWhisper = config.stack === 'openai'
   let steps: ProcessingStep[] = createSteps(1, isWhisper)
+  let activeStepId: string | null = null
 
   const emitProgress = (
     currentChunk: number,
@@ -130,6 +133,7 @@ export async function runTranscription(
   }
 
   try {
+    activeStepId = 'extract'
     steps = updateStep(steps, 'extract', 'active')
     emitProgress(0, 0)
 
@@ -138,10 +142,11 @@ export async function runTranscription(
     steps = updateStep(steps, 'extract', 'done')
     emitProgress(0, 0)
 
+    activeStepId = 'chunk'
     steps = updateStep(steps, 'chunk', 'active')
     emitProgress(0, 0)
 
-    const maxDuration = isWhisper ? WHISPER_MAX_CHUNK_DURATION_SEC : 1200
+    const maxDuration = isWhisper ? WHISPER_MAX_CHUNK_DURATION_SEC : GEMINI_MAX_CHUNK_DURATION_SEC
     const chunks = await chunkAudio(wavBlob, maxDuration)
 
     steps = updateStep(steps, 'chunk', 'done')
@@ -157,6 +162,7 @@ export async function runTranscription(
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i]
       const stepId = `transcribe-${i}`
+      activeStepId = stepId
       steps = updateStep(steps, stepId, 'active')
 
       const avgTime =
@@ -190,6 +196,7 @@ export async function runTranscription(
       emitProgress(i + 1, chunks.length)
     }
 
+    activeStepId = 'diarize'
     steps = updateStep(steps, 'diarize', 'active')
     emitProgress(chunks.length, chunks.length)
 
@@ -197,6 +204,7 @@ export async function runTranscription(
 
     steps = updateStep(steps, 'diarize', 'done')
 
+    activeStepId = 'finalize'
     steps = updateStep(steps, 'finalize', 'active')
     emitProgress(chunks.length, chunks.length)
 
@@ -223,9 +231,19 @@ export async function runTranscription(
 
     steps = updateStep(steps, 'finalize', 'done')
     emitProgress(chunks.length, chunks.length)
+    activeStepId = null
 
     callbacks.onComplete(sortedSegments)
   } catch (err) {
+    if (activeStepId) {
+      steps = updateStep(steps, activeStepId, 'error')
+      callbacks.onProgress({
+        steps: [...steps],
+        currentChunk: 0,
+        totalChunks: steps.filter((step) => step.id.startsWith('transcribe-')).length,
+        estimatedTimeRemaining: null,
+      })
+    }
     callbacks.onError(
       err instanceof Error ? err : new Error(String(err))
     )

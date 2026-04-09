@@ -75,6 +75,7 @@ export function TranscriptionProvider({ children }: { children: ReactNode }) {
           setError(err.message)
           setIsProcessing(false)
           setProgress(null)
+          appActions.failProcessing()
         },
       })
     },

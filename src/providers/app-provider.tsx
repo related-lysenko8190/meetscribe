@@ -21,6 +21,7 @@ type AppAction =
   | { type: 'LOAD_VIDEO'; blob: Blob; fileName: string }
   | { type: 'START_PROCESSING' }
   | { type: 'FINISH_PROCESSING' }
+  | { type: 'FAIL_PROCESSING' }
   | { type: 'RESET' }
   | { type: 'DEV_SET_PHASE'; phase: AppPhase }
 
@@ -57,6 +58,10 @@ function appReducer(state: InternalAppState, action: AppAction): InternalAppStat
     case 'FINISH_PROCESSING':
       if (state.phase !== 'processing') return state
       return { ...state, phase: 'transcript_ready' }
+
+    case 'FAIL_PROCESSING':
+      if (state.phase !== 'processing') return state
+      return { ...state, phase: 'video_loaded' }
 
     case 'RESET':
       return { phase: 'initial', videoBlob: null, fileName: null }
@@ -103,6 +108,7 @@ export function AppProvider({ children, onLoadVideo }: AppProviderProps) {
       loadVideo: loadVideoCallback,
       startProcessing: () => dispatch({ type: 'START_PROCESSING' }),
       finishProcessing: () => dispatch({ type: 'FINISH_PROCESSING' }),
+      failProcessing: () => dispatch({ type: 'FAIL_PROCESSING' }),
       reset: () => dispatch({ type: 'RESET' }),
       _setPhase: (phase) => dispatch({ type: 'DEV_SET_PHASE', phase }),
     }),

@@ -330,6 +330,8 @@ function AppContent() {
             onSendMessage={handleSendMessage}
             isStreaming={chat.isStreaming}
             progress={transcription.progress}
+            transcriptionError={transcription.error}
+            onRetryTranscribe={handleTranscribe}
           />
         </section>
       </main>

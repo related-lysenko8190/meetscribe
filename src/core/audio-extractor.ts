@@ -72,14 +72,27 @@ function resampleTo16kMono(audioBuffer: AudioBuffer): Float32Array {
   return resampled
 }
 
+const LARGE_VIDEO_WARNING_BYTES = 500 * 1024 * 1024
+
 export async function extractAudio(videoBlob: Blob): Promise<Blob> {
+  if (videoBlob.size >= LARGE_VIDEO_WARNING_BYTES) {
+    console.warn(
+      `Large video detected (${Math.round(videoBlob.size / (1024 * 1024))} MB). Audio extraction may take longer or fail due to browser memory limits.`
+    )
+  }
+
   const arrayBuffer = await videoBlob.arrayBuffer()
 
   const audioCtx = new AudioContext()
   let audioBuffer: AudioBuffer
 
   try {
-    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer)
+    try {
+      audioBuffer = await audioCtx.decodeAudioData(arrayBuffer)
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err)
+      throw new Error(`Failed to decode audio track from video: ${reason}`)
+    }
   } finally {
     void audioCtx.close()
   }
